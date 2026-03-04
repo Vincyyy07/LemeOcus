@@ -81,7 +81,7 @@ const Habits = () => {
         <h1 className="font-display text-3xl font-bold">Habits</h1>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg hover:bg-primary/20 transition-colors text-sm font-medium"
+          className="flex items-center gap-2 btn-primary text-primary-foreground px-4 py-2 rounded-xl text-sm font-medium"
         >
           <Plus className="w-4 h-4" /> Add Habit
         </button>
@@ -89,13 +89,19 @@ const Habits = () => {
 
       {/* Stats row */}
       <motion.div variants={fadeUp} className="grid grid-cols-3 gap-4">
-        <div className="glass rounded-xl p-5 text-center glow-green">
+        <div className="glass-card rounded-2xl p-5 text-center glow-green">
           <div className="relative w-16 h-16 mx-auto mb-3">
             <svg className="w-16 h-16 -rotate-90" viewBox="0 0 64 64">
+              <defs>
+                <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(145 80% 52%)" />
+                  <stop offset="100%" stopColor="hsl(182 88% 60%)" />
+                </linearGradient>
+              </defs>
               <circle cx="32" cy="32" r="28" fill="none" stroke="hsl(var(--secondary))" strokeWidth="4" />
               <motion.circle
                 cx="32" cy="32" r="28" fill="none"
-                stroke="hsl(var(--success))"
+                stroke="url(#progressGrad)"
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeDasharray={`${2 * Math.PI * 28}`}
@@ -108,12 +114,12 @@ const Habits = () => {
           </div>
           <p className="text-xs text-muted-foreground">Today's Progress</p>
         </div>
-        <div className="glass rounded-xl p-5 text-center">
+        <div className="glass-card rounded-2xl p-5 text-center">
           <Flame className="w-8 h-8 text-destructive mx-auto mb-2" />
           <p className="text-2xl font-bold font-display">{bestStreak}</p>
           <p className="text-xs text-muted-foreground">Current Best</p>
         </div>
-        <div className="glass rounded-xl p-5 text-center">
+        <div className="glass-card rounded-2xl p-5 text-center">
           <Trophy className="w-8 h-8 text-primary mx-auto mb-2" />
           <p className="text-2xl font-bold font-display">{longestStreak}</p>
           <p className="text-xs text-muted-foreground">Longest Streak</p>
@@ -121,7 +127,7 @@ const Habits = () => {
       </motion.div>
 
       {/* Today's habits */}
-      <motion.section variants={fadeUp} className="glass rounded-xl p-6 glow-purple">
+      <motion.section variants={fadeUp} className="glass-card rounded-2xl p-6 glow-purple">
         <h2 className="font-display text-lg font-semibold mb-4">Today's Checklist</h2>
         {habits.length === 0 ? (
           <p className="text-center text-muted-foreground py-6 text-sm">No habits yet. Add one to start building consistency!</p>
@@ -133,8 +139,10 @@ const Habits = () => {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => toggleMutation.mutate({ id: habit.id, done: !habit.done, streak: habit.streak })}
                 className={cn(
-                  "flex items-center gap-4 p-3 rounded-xl cursor-pointer transition-all",
-                  habit.done ? "bg-success/10 border border-success/20" : "bg-secondary/40 border border-border/30 hover:border-primary/30"
+                  "flex items-center gap-4 p-3.5 rounded-xl cursor-pointer transition-all duration-200",
+                  habit.done
+                    ? "bg-success/10 border border-success/25 shadow-[0_0_12px_hsl(var(--success)/0.12)]"
+                    : "bg-secondary/35 border border-border/25 hover:border-primary/30 hover:bg-secondary/55"
                 )}
               >
                 <div className={cn(
@@ -181,14 +189,14 @@ const Habits = () => {
                   value={newHabitName}
                   onChange={(e) => setNewHabitName(e.target.value)}
                   placeholder="Habit name..."
-                  className="w-full bg-secondary/50 border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 text-foreground placeholder:text-muted-foreground"
+                  className="w-full input-focus rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground"
                   autoFocus
                   onKeyDown={(e) => e.key === "Enter" && addMutation.mutate()}
                 />
                 <button
                   onClick={() => addMutation.mutate()}
                   disabled={addMutation.isPending}
-                  className="w-full bg-primary text-primary-foreground py-2.5 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full btn-primary text-primary-foreground py-2.5 rounded-xl text-sm font-semibold disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {addMutation.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                   Add Habit

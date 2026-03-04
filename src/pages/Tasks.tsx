@@ -99,7 +99,7 @@ const Tasks = () => {
         <h1 className="font-display text-3xl font-bold">Tasks</h1>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg hover:bg-primary/20 transition-colors text-sm font-medium"
+          className="flex items-center gap-2 btn-primary text-primary-foreground px-4 py-2 rounded-xl text-sm font-medium"
         >
           <Plus className="w-4 h-4" /> Add Task
         </button>
@@ -112,21 +112,25 @@ const Tasks = () => {
             key={c.value}
             onClick={() => setCategory(c.value)}
             className={cn(
-              "px-4 py-1.5 rounded-full text-sm transition-all",
-              category === c.value ? "bg-primary text-primary-foreground" : "bg-secondary/50 text-muted-foreground hover:text-foreground"
+              "px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200",
+              category === c.value
+                ? "bg-primary/20 text-primary border border-primary/40 shadow-[0_0_10px_hsl(var(--primary)/0.2)]"
+                : "bg-secondary/45 text-muted-foreground border border-border/40 hover:text-foreground hover:border-primary/20"
             )}
           >
             {c.label}
           </button>
         ))}
-        <div className="w-px bg-border mx-2" />
+        <div className="w-px bg-border/50 mx-1" />
         {(["today", "upcoming", "completed"] as Filter[]).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={cn(
-              "px-4 py-1.5 rounded-full text-sm capitalize transition-all",
-              filter === f ? "bg-accent/20 text-accent" : "bg-secondary/50 text-muted-foreground hover:text-foreground"
+              "px-4 py-1.5 rounded-full text-sm capitalize font-medium transition-all duration-200",
+              filter === f
+                ? "bg-accent/15 text-accent border border-accent/35 shadow-[0_0_10px_hsl(var(--accent)/0.15)]"
+                : "bg-secondary/45 text-muted-foreground border border-border/40 hover:text-foreground hover:border-accent/20"
             )}
           >
             {f}
@@ -135,7 +139,7 @@ const Tasks = () => {
       </motion.div>
 
       {/* Task List */}
-      <motion.div variants={stagger} className="space-y-2">
+      <motion.div variants={stagger} className="space-y-2 glass-card rounded-2xl p-4">
         <AnimatePresence>
           {filtered.length === 0 && (
             <motion.p variants={fadeUp} className="text-center text-muted-foreground py-10 text-sm">
@@ -148,7 +152,12 @@ const Tasks = () => {
               variants={fadeUp}
               exit={{ opacity: 0, x: -20 }}
               layout
-              className={cn("glass rounded-xl p-4 flex items-center gap-4 group transition-all", task.done && "opacity-60")}
+              className={cn(
+                "rounded-xl p-4 flex items-center gap-4 group transition-all duration-200 border",
+                task.done
+                  ? "bg-secondary/20 border-border/20 opacity-55"
+                  : "bg-secondary/35 border-border/25 hover:border-primary/25 hover:bg-secondary/55"
+              )}
             >
               <button onClick={() => toggleMutation.mutate({ id: task.id, done: !task.done })} className="shrink-0">
                 {task.done ? <CheckCircle2 className="w-5 h-5 text-success" /> : <Circle className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary transition-colors" />}
@@ -201,7 +210,7 @@ const Tasks = () => {
                   value={newTask.title}
                   onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
                   placeholder="Task title..."
-                  className="w-full bg-secondary/50 border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 text-foreground placeholder:text-muted-foreground"
+                  className="w-full input-focus rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground"
                   autoFocus
                   onKeyDown={(e) => e.key === "Enter" && addMutation.mutate()}
                 />
@@ -209,7 +218,7 @@ const Tasks = () => {
                   <select
                     value={newTask.priority}
                     onChange={(e) => setNewTask({ ...newTask, priority: e.target.value as Priority })}
-                    className="flex-1 bg-secondary/50 border border-border/50 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none"
+                    className="flex-1 input-focus rounded-xl px-3 py-2 text-sm text-foreground"
                   >
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
@@ -218,7 +227,7 @@ const Tasks = () => {
                   <select
                     value={newTask.category}
                     onChange={(e) => setNewTask({ ...newTask, category: e.target.value as Exclude<Category, "all"> })}
-                    className="flex-1 bg-secondary/50 border border-border/50 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none"
+                    className="flex-1 input-focus rounded-xl px-3 py-2 text-sm text-foreground"
                   >
                     <option value="work">Work</option>
                     <option value="study">Study</option>
@@ -228,7 +237,7 @@ const Tasks = () => {
                 <button
                   onClick={() => addMutation.mutate()}
                   disabled={addMutation.isPending}
-                  className="w-full bg-primary text-primary-foreground py-2.5 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full btn-primary text-primary-foreground py-2.5 rounded-xl text-sm font-semibold disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {addMutation.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                   Add Task

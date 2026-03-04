@@ -98,12 +98,12 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Focus Tasks */}
-        <motion.section variants={fadeUp} className="lg:col-span-2 glass rounded-xl p-6 glow-purple">
+        <motion.section variants={fadeUp} className="lg:col-span-2 glass-card rounded-2xl p-6 glow-purple hover-lift">
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-display text-lg font-semibold flex items-center gap-2">
               <Target className="w-5 h-5 text-primary" /> Focus Tasks
             </h2>
-            <button className="flex items-center gap-2 text-sm bg-primary/10 text-primary px-4 py-2 rounded-lg hover:bg-primary/20 transition-colors">
+            <button className="flex items-center gap-2 text-sm btn-primary px-4 py-2 rounded-lg text-primary-foreground">
               <Play className="w-4 h-4" /> Focus Mode
             </button>
           </div>
@@ -119,22 +119,24 @@ const Dashboard = () => {
                 <div
                   key={task.id}
                   className={cn(
-                    "flex items-center gap-4 p-3 rounded-lg transition-colors",
-                    task.done ? "bg-secondary/30" : "bg-secondary/50 hover:bg-secondary/70"
+                    "flex items-center gap-4 p-3 rounded-xl transition-all duration-200",
+                    task.done
+                      ? "bg-secondary/20 opacity-60"
+                      : "bg-secondary/40 hover:bg-secondary/60 hover:border-primary/20 border border-transparent"
                   )}
                 >
                   <div
                     className={cn(
-                      "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors",
-                      task.done ? "border-success bg-success/20" : "border-muted-foreground/40"
+                      "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200",
+                      task.done ? "border-success bg-success/20" : "border-muted-foreground/35 hover:border-primary/60"
                     )}
                   >
                     {task.done && <CheckCircle2 className="w-3.5 h-3.5 text-success" />}
                   </div>
-                  <span className={cn("flex-1 text-sm", task.done && "line-through text-muted-foreground")}>
+                  <span className={cn("flex-1 text-sm font-medium", task.done && "line-through text-muted-foreground")}>
                     {task.title}
                   </span>
-                  <span className={cn("w-2 h-2 rounded-full", priorityColors[task.priority])} />
+                  <span className={cn("w-2.5 h-2.5 rounded-full shadow-sm", priorityColors[task.priority])} />
                 </div>
               ))
             )}
@@ -142,7 +144,7 @@ const Dashboard = () => {
         </motion.section>
 
         {/* Daily Summary */}
-        <motion.section variants={fadeUp} className="glass rounded-xl p-6">
+        <motion.section variants={fadeUp} className="glass-card rounded-2xl p-6">
           <h2 className="font-display text-lg font-semibold flex items-center gap-2 mb-5">
             <TrendingUp className="w-5 h-5 text-accent" /> Daily Summary
           </h2>
@@ -170,7 +172,7 @@ const Dashboard = () => {
       </div>
 
       {/* Habit Overview */}
-      <motion.section variants={fadeUp} className="glass rounded-xl p-6 glow-blue">
+      <motion.section variants={fadeUp} className="glass-card rounded-2xl p-6 glow-blue">
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-display text-lg font-semibold flex items-center gap-2">
             <RepeatIcon className="w-5 h-5 text-accent" /> Today's Habits
@@ -191,23 +193,25 @@ const Dashboard = () => {
                 <div
                   key={habit.id}
                   className={cn(
-                    "flex flex-col items-center gap-2 p-4 rounded-xl transition-all",
+                    "flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-200",
                     habit.done
-                      ? "bg-success/10 border border-success/20"
-                      : "bg-secondary/40 border border-border/30"
+                      ? "bg-success/10 border border-success/25 shadow-[0_0_12px_hsl(var(--success)/0.15)]"
+                      : "bg-secondary/35 border border-border/25 hover:border-primary/25 hover:bg-secondary/50"
                   )}
                 >
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all",
-                      habit.done ? "border-success bg-success/20" : "border-muted-foreground/30"
+                      "w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200",
+                      habit.done
+                        ? "border-success bg-success/20 shadow-[0_0_10px_hsl(var(--success)/0.3)]"
+                        : "border-muted-foreground/25"
                     )}
                   >
                     {habit.done && <CheckCircle2 className="w-5 h-5 text-success" />}
                   </div>
-                  <span className="text-xs font-medium text-center">{habit.name}</span>
-                  <span className="text-[10px] text-muted-foreground flex items-center gap-1">
-                    <Flame className="w-3 h-3" /> {habit.streak}
+                  <span className="text-xs font-medium text-center leading-tight">{habit.name}</span>
+                  <span className="text-[10px] text-muted-foreground flex items-center gap-0.5">
+                    <Flame className="w-3 h-3 text-destructive/80" /> {habit.streak}
                   </span>
                 </div>
               ))}
@@ -218,12 +222,13 @@ const Dashboard = () => {
                 <span>Progress</span>
                 <span>{completedHabits}/{habits.length}</span>
               </div>
-              <div className="h-2 rounded-full bg-secondary overflow-hidden">
+              <div className="h-2 rounded-full bg-secondary/60 overflow-hidden">
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                  className="h-full rounded-full progress-gradient"
+                  style={{ boxShadow: "0 0 8px hsl(var(--primary)/0.5)" }}
                   initial={{ width: 0 }}
                   animate={{ width: `${habitPercent}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
                 />
               </div>
             </div>
@@ -252,20 +257,21 @@ const SummaryItem = ({
   color: string;
 }) => (
   <div>
-    <div className="flex justify-between text-sm mb-1.5">
-      <span className="text-muted-foreground">{label}</span>
-      <span className="font-medium">{value}</span>
+    <div className="flex justify-between text-sm mb-2">
+      <span className="text-muted-foreground text-xs font-medium">{label}</span>
+      <span className="font-semibold text-xs">{value}</span>
     </div>
-    <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
+    <div className="h-1.5 rounded-full bg-secondary/60 overflow-hidden">
       <motion.div
         className={cn("h-full rounded-full", {
-          "bg-primary": color === "primary",
-          "bg-success": color === "success",
-          "bg-accent": color === "accent",
+          "bg-gradient-to-r from-primary to-violet-400": color === "primary",
+          "bg-gradient-to-r from-success to-emerald-400": color === "success",
+          "bg-gradient-to-r from-accent to-cyan-400": color === "accent",
         })}
+        style={{ boxShadow: color === "primary" ? "0 0 6px hsl(var(--primary)/0.5)" : color === "success" ? "0 0 6px hsl(var(--success)/0.5)" : "0 0 6px hsl(var(--accent)/0.5)" }}
         initial={{ width: 0 }}
         animate={{ width: `${percent}%` }}
-        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+        transition={{ duration: 1.1, delay: 0.2, ease: "easeOut" }}
       />
     </div>
   </div>
