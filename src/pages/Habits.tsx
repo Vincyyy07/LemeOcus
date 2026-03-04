@@ -2,9 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Flame, CheckCircle2, Trophy, Plus, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/context/AuthContext";
+import { useHabits } from "@/hooks/use-habits";
 import { toast } from "sonner";
 
 const stagger = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.06 } } };
@@ -16,14 +17,7 @@ const Habits = () => {
   const [showModal, setShowModal] = useState(false);
   const [newHabitName, setNewHabitName] = useState("");
 
-  const { data: habits = [], isLoading } = useQuery({
-    queryKey: ["habits"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("habits").select("*").order("created_at", { ascending: true });
-      if (error) throw error;
-      return data;
-    },
-  });
+  const { data: habits = [], isLoading } = useHabits();
 
   const toggleMutation = useMutation({
     mutationFn: async ({ id, done, streak }: { id: string; done: boolean; streak: number }) => {

@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import { Sparkles, Flame, CheckCircle2, Target, TrendingUp, Play, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { useTasks } from "@/hooks/use-tasks";
+import { useHabits } from "@/hooks/use-habits";
 
 const quotes = [
   "The secret of getting ahead is getting started.",
@@ -46,18 +45,7 @@ const Dashboard = () => {
   const quote = quotes[new Date().getDate() % quotes.length];
 
   const { data: tasks = [], isLoading: tasksLoading } = useTasks();
-
-  const { data: habits = [], isLoading: habitsLoading } = useQuery({
-    queryKey: ["habits"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("habits")
-        .select("*")
-        .order("created_at", { ascending: true });
-      if (error) throw error;
-      return data;
-    },
-  });
+  const { data: habits = [], isLoading: habitsLoading } = useHabits();
 
   const isLoading = tasksLoading || habitsLoading;
 
