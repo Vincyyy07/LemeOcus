@@ -23,17 +23,9 @@ const SettingsPage = () => {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
-  const [ambientIntensity, setAmbientIntensity] = useState<number>(
-    () => getSetting("ambient", 60) as number
-  );
   const [notifications, setNotifications] = useState<boolean>(
     () => getSetting("notifications", true) as boolean
   );
-
-  const handleAmbient = (v: number) => {
-    setAmbientIntensity(v);
-    localStorage.setItem("lemeocu_ambient", String(v));
-  };
 
   const handleNotifications = (v: boolean) => {
     setNotifications(v);
@@ -91,29 +83,6 @@ const SettingsPage = () => {
               }
             </div>
           </button>
-        </div>
-
-        {/* Separator */}
-        <div className="h-px bg-border/40" />
-
-        {/* Ambient intensity */}
-        <div>
-          <div className="flex items-center gap-3 mb-3">
-            <Sparkles className="w-5 h-5 text-primary" />
-            <div>
-              <p className="text-sm font-medium">Ambient Intensity</p>
-              <p className="text-xs text-muted-foreground">Background glow effect strength</p>
-            </div>
-          </div>
-          <input
-            type="range"
-            min={0}
-            max={100}
-            value={ambientIntensity}
-            onChange={(e) => handleAmbient(Number(e.target.value))}
-            className="w-full accent-primary"
-          />
-          <p className="text-xs text-muted-foreground mt-1">{ambientIntensity}%</p>
         </div>
 
         {/* Separator */}

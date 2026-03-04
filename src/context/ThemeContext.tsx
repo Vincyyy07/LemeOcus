@@ -20,14 +20,18 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     });
 
     useEffect(() => {
-        const root = document.documentElement;
-        if (theme === "light") {
-            root.classList.add("light");
-            root.classList.remove("dark");
-        } else {
+        const root = window.document.documentElement;
+
+        // Remove old classes
+        root.classList.remove("light", "dark");
+
+        // Add new class
+        if (theme === "dark") {
             root.classList.add("dark");
-            root.classList.remove("light");
+        } else {
+            root.classList.add("light");
         }
+
         localStorage.setItem("lemeocu_theme", theme);
     }, [theme]);
 
