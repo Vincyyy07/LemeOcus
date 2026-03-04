@@ -3,6 +3,7 @@ import { Sparkles, Flame, CheckCircle2, Target, TrendingUp, Play, Loader2 } from
 import { cn } from "@/lib/utils";
 import { useTasks } from "@/hooks/use-tasks";
 import { useHabits } from "@/hooks/use-habits";
+import { useAuth } from "@/context/AuthContext";
 
 const quotes = [
   "The secret of getting ahead is getting started.",
@@ -42,6 +43,9 @@ const fadeUp = {
 };
 
 const Dashboard = () => {
+  const { user } = useAuth();
+  const displayName = user?.user_metadata?.username || "Explorer";
+
   const quote = quotes[new Date().getDate() % quotes.length];
 
   const { data: tasks = [], isLoading: tasksLoading } = useTasks();
@@ -76,7 +80,7 @@ const Dashboard = () => {
       <motion.section variants={fadeUp}>
         <p className="text-muted-foreground text-sm">{todayDate}</p>
         <h1 className="font-display text-3xl md:text-4xl font-bold mt-1">
-          {getGreeting()}, <span className="text-gradient-purple">Explorer</span>
+          {getGreeting()}, <span className="text-gradient-purple">{displayName}</span>
         </h1>
         <p className="text-muted-foreground mt-2 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-primary" />

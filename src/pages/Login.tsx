@@ -9,6 +9,7 @@ import { toast } from "sonner";
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPass, setShowPass] = useState(false);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,7 +30,10 @@ const Login = () => {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin },
+          options: {
+            data: { username },
+            emailRedirectTo: window.location.origin
+          },
         });
         if (error) throw error;
         navigate("/onboarding", { replace: true });
@@ -169,6 +173,25 @@ const Login = () => {
           </AnimatePresence>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {!isLogin && (
+              <div>
+                <label className="text-xs text-muted-foreground font-medium mb-1.5 block">Username</label>
+                <input
+                  type="text"
+                  placeholder="How should we call you?"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground placeholder:text-muted-foreground/60 transition-all"
+                  style={{
+                    background: "hsl(232 24% 9%)",
+                    border: "1px solid hsl(232 18% 18%)",
+                  }}
+                  onFocus={(e) => { e.target.style.borderColor = "hsl(263 90% 68% / 0.5)"; }}
+                  onBlur={(e) => { e.target.style.borderColor = "hsl(232 18% 18%)"; }}
+                />
+              </div>
+            )}
             <div>
               <label className="text-xs text-muted-foreground font-medium mb-1.5 block">Email</label>
               <input
