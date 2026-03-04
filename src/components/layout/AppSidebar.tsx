@@ -40,11 +40,7 @@ const AppSidebar = () => {
 
   return (
     <motion.aside
-      className="h-screen sticky top-0 flex flex-col z-30 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg, hsl(228 34% 3%) 0%, hsl(228 30% 5%) 60%, hsl(228 28% 4%) 100%)",
-        borderRight: "1px solid hsl(228 20% 10%)",
-      }}
+      className="h-screen sticky top-0 flex flex-col z-30 relative overflow-hidden bg-sidebar border-r border-sidebar-border"
       animate={{ width: collapsed ? 72 : 240 }}
       transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
     >
@@ -52,7 +48,7 @@ const AppSidebar = () => {
       <div
         className="absolute top-0 left-0 w-full h-48 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 80% 60% at 50% -10%, hsl(262 85% 68% / 0.09) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse 80% 60% at 50% -10%, hsl(var(--primary) / 0.09) 0%, transparent 70%)",
         }}
       />
 
@@ -60,7 +56,7 @@ const AppSidebar = () => {
       <div
         className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
         style={{
-          background: "linear-gradient(90deg, transparent, hsl(262 92% 70% / 0.2), hsl(182 88% 60% / 0.15), transparent)",
+          background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), hsl(var(--accent) / 0.15), transparent)",
         }}
       />
 
@@ -69,9 +65,9 @@ const AppSidebar = () => {
         <motion.div
           className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 relative"
           style={{
-            background: "linear-gradient(135deg, hsl(262 85% 68% / 0.20), hsl(182 80% 55% / 0.12))",
-            border: "1px solid hsl(262 85% 68% / 0.35)",
-            boxShadow: "0 0 12px hsl(262 85% 68% / 0.22)",
+            background: "linear-gradient(135deg, hsl(var(--primary) / 0.20), hsl(var(--accent) / 0.12))",
+            border: "1px solid hsl(var(--primary) / 0.35)",
+            boxShadow: "0 0 12px hsl(var(--primary) / 0.22)",
           }}
           whileHover={{ scale: 1.08, rotate: 5 }}
           transition={{ type: "spring", stiffness: 400, damping: 15 }}
@@ -90,7 +86,7 @@ const AppSidebar = () => {
               <span
                 className="font-display font-bold text-[17px] bg-clip-text text-transparent leading-none"
                 style={{
-                  backgroundImage: "linear-gradient(135deg, hsl(262 92% 82%), hsl(182 88% 72%))",
+                  backgroundImage: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))",
                 }}
               >
                 LemeOcus
@@ -107,7 +103,7 @@ const AppSidebar = () => {
       <div
         className="mx-4 h-px mb-3"
         style={{
-          background: "linear-gradient(90deg, transparent, hsl(262 92% 70% / 0.35), hsl(182 88% 60% / 0.2), transparent)",
+          background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.35), hsl(var(--accent) / 0.2), transparent)",
         }}
       />
 
@@ -131,17 +127,16 @@ const AppSidebar = () => {
                   layoutId="sidebar-active"
                   className="absolute inset-0 rounded-xl"
                   style={{
-                    background: "linear-gradient(135deg, hsl(262 85% 68% / 0.18), hsl(182 80% 55% / 0.10))",
-                    border: "1px solid hsl(262 85% 68% / 0.28)",
-                    boxShadow: "0 0 10px hsl(262 85% 68% / 0.12)",
+                    background: "linear-gradient(135deg, hsl(var(--primary) / 0.50), hsl(var(--primary) / 0.90))",
+                    border: "1px solid hsl(var(--primary) / 0.6)",
+                    boxShadow: "0 0 10px hsl(var(--primary) / 0.3)",
                   }}
                   transition={{ type: "spring", bounce: 0.18, duration: 0.45 }}
                 />
               )}
               {!isActive && (
                 <div
-                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                  style={{ background: "hsl(228 22% 12% / 0.85)" }}
+                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-sidebar-accent"
                 />
               )}
 
@@ -151,8 +146,8 @@ const AppSidebar = () => {
                   layoutId="sidebar-indicator"
                   className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full"
                   style={{
-                    background: "linear-gradient(180deg, hsl(262 85% 68%), hsl(182 80% 55%))",
-                    boxShadow: "0 0 5px hsl(262 85% 68% / 0.5)",
+                    background: "linear-gradient(180deg, hsl(var(--primary)), hsl(var(--accent)))",
+                    boxShadow: "0 0 5px hsl(var(--primary) / 0.5)",
                   }}
                   transition={{ type: "spring", bounce: 0.2, duration: 0.45 }}
                 />
@@ -161,7 +156,7 @@ const AppSidebar = () => {
               <item.icon
                 className={cn(
                   "w-4 h-4 relative z-10 shrink-0 transition-colors duration-200",
-                  isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
+                  isActive ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
                 )}
               />
               <AnimatePresence>
@@ -173,7 +168,7 @@ const AppSidebar = () => {
                     transition={{ duration: 0.15 }}
                     className={cn(
                       "relative z-10 text-sm font-medium",
-                      isActive ? "text-foreground" : ""
+                      isActive ? "text-primary-foreground font-semibold" : ""
                     )}
                   >
                     {item.title}
@@ -190,7 +185,7 @@ const AppSidebar = () => {
         <div
           className="h-px mx-1 mb-3"
           style={{
-            background: "linear-gradient(90deg, transparent, hsl(228 20% 17%), transparent)",
+            background: "linear-gradient(90deg, transparent, hsl(var(--sidebar-border)), transparent)",
           }}
         />
 
@@ -201,16 +196,15 @@ const AppSidebar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="px-3 py-2.5 rounded-xl mb-1 gradient-border"
+              className="px-3 py-2.5 rounded-xl mb-1 gradient-border bg-sidebar-accent/50"
               style={{
-                background: "linear-gradient(135deg, hsl(228 22% 10%), hsl(228 26% 8%))",
-                border: "1px solid hsl(228 20% 14%)",
+                border: "1px solid hsl(var(--sidebar-border))",
               }}
             >
-              <p className="text-[9px] text-muted-foreground/45 uppercase tracking-[0.14em] font-semibold">
+              <p className="text-[9px] text-muted-foreground/60 uppercase tracking-[0.14em] font-semibold">
                 Signed in as
               </p>
-              <p className="text-[11px] text-muted-foreground/75 truncate mt-0.5">
+              <p className="text-[11px] text-muted-foreground truncate mt-0.5">
                 {user?.email ?? "—"}
               </p>
             </motion.div>
@@ -223,17 +217,16 @@ const AppSidebar = () => {
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-muted-foreground hover:text-destructive transition-all duration-200 group relative overflow-hidden"
         >
           <div
-            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-            style={{ background: "hsl(355 82% 62% / 0.08)" }}
+            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-destructive/10"
           />
-          <LogOut className="w-4 h-4 relative z-10 shrink-0" />
+          <LogOut className="w-4 h-4 relative z-10 shrink-0 group-hover:text-destructive" />
           <AnimatePresence>
             {!collapsed && (
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-sm font-medium relative z-10"
+                className="text-sm font-medium relative z-10 group-hover:text-destructive"
               >
                 Log out
               </motion.span>
