@@ -88,7 +88,11 @@ const AppSidebar = ({
         />
 
         {/* Logo */}
-        <div className="flex items-center gap-3 px-4 h-16 relative z-10">
+        <div
+          className="flex items-center gap-3 px-4 h-16 relative z-10 cursor-pointer select-none"
+          onClick={() => navigate("/dashboard")}
+          title="Go to Dashboard"
+        >
           <motion.div
             className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 relative"
             style={{
