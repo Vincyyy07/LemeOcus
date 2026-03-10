@@ -164,9 +164,6 @@ const Tasks = () => {
               </button>
               <div className="flex-1 min-w-0">
                 <p className={cn("text-sm font-medium", task.done && "line-through text-muted-foreground")}>{task.title}</p>
-                <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                  <Calendar className="w-3 h-3" /> {task.due_time || "12:00 PM"}
-                </p>
               </div>
               <span className={cn("w-2 h-2 rounded-full shrink-0", priorityDot[task.priority as Priority])} />
               <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
