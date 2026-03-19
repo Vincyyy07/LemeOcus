@@ -65,16 +65,9 @@ const AppSidebar = ({
 
       <motion.aside
         className={cn(
-          "fixed md:sticky top-0 left-0 h-[100dvh] flex flex-col z-50 overflow-hidden transition-transform duration-300 ease-in-out md:translate-x-0 w-[240px]",
+          "fixed md:sticky top-0 left-0 h-[100dvh] flex flex-col z-50 bg-sidebar border-r border-sidebar-border overflow-hidden transition-transform duration-300 ease-in-out md:translate-x-0 w-[240px]",
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         )}
-        style={{
-          background: "hsl(var(--sidebar-background) / 0.70)",
-          backdropFilter: "blur(28px) saturate(200%)",
-          WebkitBackdropFilter: "blur(28px) saturate(200%)",
-          borderRight: "1px solid hsl(var(--sidebar-border) / 0.60)",
-          boxShadow: "4px 0 32px hsl(0 0% 0% / 0.18), inset -1px 0 0 hsl(255 100% 100% / 0.04)",
-        }}
         animate={{ width: collapsed ? 72 : 240 }}
         transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
       >

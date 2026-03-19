@@ -12,7 +12,7 @@ const fadeUp = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="glass-strong rounded-none px-3 py-2 text-xs">
+    <div className="glass-strong rounded-lg px-3 py-2 text-xs">
       <p className="text-muted-foreground">{label}</p>
       <p className="font-medium">{payload[0].value}</p>
     </div>
@@ -117,7 +117,7 @@ const Statistics = () => {
           { label: "Habits Today", value: `${completedHabits}/${habits.length}` },
           { label: "Best Streak", value: `${bestLongestStreak}d` },
         ].map((stat) => (
-          <div key={stat.label} className="glass rounded-none p-4 text-center">
+          <div key={stat.label} className="glass rounded-xl p-4 text-center">
             <p className="text-2xl font-bold font-display">{stat.value}</p>
             <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
           </div>
@@ -126,7 +126,7 @@ const Statistics = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Tasks per day of week */}
-        <motion.div variants={fadeUp} className="glass rounded-none p-6 glow-purple">
+        <motion.div variants={fadeUp} className="glass rounded-xl p-6 glow-purple">
           <h2 className="font-display text-lg font-semibold mb-4">Tasks by Day of Week</h2>
           {tasks.length === 0 ? (
             <p className="text-center text-muted-foreground py-16 text-sm">
@@ -146,7 +146,7 @@ const Statistics = () => {
         </motion.div>
 
         {/* Habit streaks */}
-        <motion.div variants={fadeUp} className="glass rounded-none p-6 glow-blue">
+        <motion.div variants={fadeUp} className="glass rounded-xl p-6 glow-blue">
           <h2 className="font-display text-lg font-semibold mb-4">Habit Streaks</h2>
           {habits.length === 0 ? (
             <p className="text-center text-muted-foreground py-16 text-sm">
@@ -167,14 +167,14 @@ const Statistics = () => {
       </div>
 
       {/* Insights */}
-      <motion.div variants={fadeUp} className="glass rounded-none p-6">
+      <motion.div variants={fadeUp} className="glass rounded-xl p-6">
         <h2 className="font-display text-lg font-semibold mb-4">Insights</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {insights.map((insight, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
-              className="flex items-center gap-3 p-3 rounded-xl glass-panel"
+              className="flex items-center gap-3 p-3 rounded-xl bg-secondary/40 border border-border/30"
             >
               <insight.icon className={`w-5 h-5 shrink-0 ${insight.color}`} />
               <span className="text-sm">{insight.text}</span>
