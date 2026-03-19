@@ -90,7 +90,7 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Focus Tasks */}
-        <motion.section variants={fadeUp} className="lg:col-span-2 glass-card rounded-2xl p-6 glow-purple hover-lift">
+        <motion.section variants={fadeUp} className="lg:col-span-2 glass-card rounded-none p-6 glow-purple hover-lift">
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-display text-lg font-semibold flex items-center gap-2">
               <Target className="w-5 h-5 text-primary" /> Focus Tasks
@@ -111,10 +111,10 @@ const Dashboard = () => {
                 <div
                   key={task.id}
                   className={cn(
-                    "flex items-center gap-4 p-3 rounded-xl transition-all duration-200",
+                    "flex items-center gap-4 p-3 rounded-xl transition-all duration-200 border",
                     task.done
-                      ? "bg-secondary/20 opacity-60"
-                      : "bg-secondary/40 hover:bg-secondary/60 hover:border-primary/20 border border-transparent"
+                      ? "bg-secondary/15 border-border/15 opacity-60"
+                      : "glass-panel hover:border-primary/30 hover:bg-secondary/40"
                   )}
                 >
                   <div
@@ -136,7 +136,7 @@ const Dashboard = () => {
         </motion.section>
 
         {/* Daily Summary */}
-        <motion.section variants={fadeUp} className="glass-card rounded-2xl p-6">
+        <motion.section variants={fadeUp} className="glass-card rounded-none p-6">
           <h2 className="font-display text-lg font-semibold flex items-center gap-2 mb-5">
             <TrendingUp className="w-5 h-5 text-accent" /> Daily Summary
           </h2>
@@ -164,7 +164,7 @@ const Dashboard = () => {
       </div>
 
       {/* Habit Overview */}
-      <motion.section variants={fadeUp} className="glass-card rounded-2xl p-6 glow-blue">
+      <motion.section variants={fadeUp} className="glass-card rounded-none p-6 glow-blue">
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-display text-lg font-semibold flex items-center gap-2">
             <RepeatIcon className="w-5 h-5 text-accent" /> Today's Habits

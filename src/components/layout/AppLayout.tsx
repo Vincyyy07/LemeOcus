@@ -7,9 +7,18 @@ const AppLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen w-full flex-col md:flex-row">
+    <div className="flex min-h-screen w-full flex-col md:flex-row relative z-10">
       {/* Mobile Header */}
-      <header className="md:hidden flex items-center justify-between px-4 h-16 border-b border-sidebar-border bg-sidebar sticky top-0 z-40">
+      <header
+        className="md:hidden flex items-center justify-between px-4 h-16 sticky top-0 z-40"
+        style={{
+          background: "hsl(var(--sidebar-background) / 0.70)",
+          backdropFilter: "blur(24px) saturate(200%)",
+          WebkitBackdropFilter: "blur(24px) saturate(200%)",
+          borderBottom: "1px solid hsl(var(--sidebar-border) / 0.55)",
+          boxShadow: "0 1px 20px hsl(0 0% 0% / 0.12)",
+        }}
+      >
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
             style={{

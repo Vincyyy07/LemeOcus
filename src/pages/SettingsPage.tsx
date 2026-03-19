@@ -44,7 +44,7 @@ const SettingsPage = () => {
     <motion.div variants={stagger} initial="hidden" animate="show" className="space-y-8 max-w-2xl">
       <motion.h1 variants={fadeUp} className="font-display text-3xl font-bold">Settings</motion.h1>
 
-      <motion.div variants={fadeUp} className="glass-card rounded-2xl p-7 space-y-7">
+      <motion.div variants={fadeUp} className="glass-card rounded-none p-7 space-y-7">
 
         {/* Theme toggle — light / dark */}
         <div className="flex items-center justify-between">

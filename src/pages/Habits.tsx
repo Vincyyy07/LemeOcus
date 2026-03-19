@@ -83,7 +83,7 @@ const Habits = () => {
 
       {/* Stats row */}
       <motion.div variants={fadeUp} className="grid grid-cols-3 gap-4">
-        <div className="glass-card rounded-2xl p-5 text-center glow-green">
+        <div className="glass-card rounded-none p-5 text-center glow-green">
           <div className="relative w-16 h-16 mx-auto mb-3">
             <svg className="w-16 h-16 -rotate-90" viewBox="0 0 64 64">
               <defs>
@@ -108,12 +108,12 @@ const Habits = () => {
           </div>
           <p className="text-xs text-muted-foreground">Today's Progress</p>
         </div>
-        <div className="glass-card rounded-2xl p-5 text-center">
+        <div className="glass-card rounded-none p-5 text-center">
           <Flame className="w-8 h-8 text-destructive mx-auto mb-2" />
           <p className="text-2xl font-bold font-display">{bestStreak}</p>
           <p className="text-xs text-muted-foreground">Current Best</p>
         </div>
-        <div className="glass-card rounded-2xl p-5 text-center">
+        <div className="glass-card rounded-none p-5 text-center">
           <Trophy className="w-8 h-8 text-primary mx-auto mb-2" />
           <p className="text-2xl font-bold font-display">{longestStreak}</p>
           <p className="text-xs text-muted-foreground">Longest Streak</p>
@@ -121,7 +121,7 @@ const Habits = () => {
       </motion.div>
 
       {/* Today's habits */}
-      <motion.section variants={fadeUp} className="glass-card rounded-2xl p-6 glow-purple">
+      <motion.section variants={fadeUp} className="glass-card rounded-none p-6 glow-purple">
         <h2 className="font-display text-lg font-semibold mb-4">Today's Checklist</h2>
         {habits.length === 0 ? (
           <p className="text-center text-muted-foreground py-6 text-sm">No habits yet. Add one to start building consistency!</p>
@@ -133,10 +133,10 @@ const Habits = () => {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => toggleMutation.mutate({ id: habit.id, done: !habit.done, streak: habit.streak })}
                 className={cn(
-                  "flex items-center gap-4 p-3.5 rounded-xl cursor-pointer transition-all duration-200",
+                  "flex items-center gap-4 p-3.5 rounded-xl cursor-pointer transition-all duration-200 border",
                   habit.done
-                    ? "bg-success/10 border border-success/25 shadow-[0_0_12px_hsl(var(--success)/0.12)]"
-                    : "bg-secondary/35 border border-border/25 hover:border-primary/30 hover:bg-secondary/55"
+                    ? "bg-success/10 border-success/25 shadow-[0_0_12px_hsl(var(--success)/0.12)]"
+                    : "glass-panel hover:border-primary/30 hover:bg-secondary/40"
                 )}
               >
                 <div className={cn(
@@ -169,7 +169,7 @@ const Habits = () => {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="glass-strong rounded-2xl p-6 w-full max-w-md glow-purple"
+              className="glass-strong rounded-none p-6 w-full max-w-md glow-purple"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-5">

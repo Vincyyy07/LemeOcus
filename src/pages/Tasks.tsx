@@ -139,7 +139,7 @@ const Tasks = () => {
       </motion.div>
 
       {/* Task List */}
-      <motion.div variants={stagger} className="space-y-2 glass-card rounded-2xl p-4">
+      <motion.div variants={stagger} className="space-y-2 glass-card rounded-none p-4">
         <AnimatePresence>
           {filtered.length === 0 && (
             <motion.p variants={fadeUp} className="text-center text-muted-foreground py-10 text-sm">
@@ -153,10 +153,10 @@ const Tasks = () => {
               exit={{ opacity: 0, x: -20 }}
               layout
               className={cn(
-                "rounded-xl p-4 flex items-center gap-4 group transition-all duration-200 border",
+                "rounded-none p-4 flex items-center gap-4 group transition-all duration-200 border",
                 task.done
-                  ? "bg-secondary/20 border-border/20 opacity-55"
-                  : "bg-secondary/35 border-border/25 hover:border-primary/25 hover:bg-secondary/55"
+                  ? "bg-secondary/15 border-border/15 opacity-55"
+                  : "glass-panel hover:border-primary/25 hover:bg-secondary/40"
               )}
             >
               <button onClick={() => toggleMutation.mutate({ id: task.id, done: !task.done })} className="shrink-0">
@@ -193,7 +193,7 @@ const Tasks = () => {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="glass-strong rounded-2xl p-6 w-full max-w-md glow-purple"
+              className="glass-strong rounded-none p-6 w-full max-w-md glow-purple"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-5">

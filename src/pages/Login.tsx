@@ -132,7 +132,7 @@ const Login = () => {
       {/* Right panel — auth form */}
       <div className="flex-1 flex items-center justify-center p-8 relative">
         {/* BG orbs for mobile */}
-        <motion.div className="absolute w-[500px] h-[500px] rounded-full blur-[120px] -top-40 -left-40 opacity-30 lg:hidden"
+        <motion.div className="absolute w-[500px] h-[500px] rounded-full blur-[120px] -top-40 -left-40 opacity-40 lg:hidden"
           style={{ background: "hsl(263 90% 68% / 0.3)" }}
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 8, repeat: Infinity }} />
@@ -141,7 +141,14 @@ const Login = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-sm relative z-10"
+          className="w-full max-w-sm relative z-10 rounded-2xl p-8"
+          style={{
+            background: "hsl(var(--card) / 0.50)",
+            backdropFilter: "blur(32px) saturate(200%)",
+            WebkitBackdropFilter: "blur(32px) saturate(200%)",
+            border: "1px solid hsl(var(--border) / 0.55)",
+            boxShadow: "0 8px 40px hsl(0 0% 0% / 0.20), inset 0 1px 0 hsl(255 100% 100% / 0.08)",
+          }}
         >
           {/* Mobile logo */}
           <div className="flex items-center gap-3 mb-8 lg:hidden">
