@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { Sparkles, Flame, CheckCircle2, Target, TrendingUp, Play, Loader2 } from "lucide-react";
+import { Sparkles, Flame, CheckCircle2, Target, TrendingUp, Play, Loader2, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTasks } from "@/hooks/use-tasks";
 import { useHabits } from "@/hooks/use-habits";
 import { useAuth } from "@/context/AuthContext";
+import { useFocus } from "@/context/FocusContext";
 
 const quotes = [
   "The secret of getting ahead is getting started.",
@@ -44,6 +45,7 @@ const fadeUp = {
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const { startFocus } = useFocus();
   const displayName = user?.user_metadata?.username || "Explorer";
 
   const quote = quotes[new Date().getDate() % quotes.length];
@@ -95,7 +97,11 @@ const Dashboard = () => {
             <h2 className="font-display text-lg font-semibold flex items-center gap-2">
               <Target className="w-5 h-5 text-primary" /> Focus Tasks
             </h2>
-            <button className="flex items-center gap-2 text-sm btn-primary px-4 py-2 rounded-lg text-primary-foreground">
+            <button
+              onClick={() => focusTasks[0] && startFocus({ id: focusTasks[0].id, title: focusTasks[0].title })}
+              disabled={focusTasks.length === 0}
+              className="flex items-center gap-2 text-sm btn-primary px-4 py-2 rounded-lg text-primary-foreground disabled:opacity-40 disabled:cursor-not-allowed"
+            >
               <Play className="w-4 h-4" /> Focus Mode
             </button>
           </div>
@@ -111,7 +117,7 @@ const Dashboard = () => {
                 <div
                   key={task.id}
                   className={cn(
-                    "flex items-center gap-4 p-3 rounded-xl transition-all duration-200",
+                    "flex items-center gap-4 p-3 rounded-xl transition-all duration-200 group",
                     task.done
                       ? "bg-secondary/20 opacity-60"
                       : "bg-secondary/40 hover:bg-secondary/60 hover:border-primary/20 border border-transparent"
@@ -129,6 +135,15 @@ const Dashboard = () => {
                     {task.title}
                   </span>
                   <span className={cn("w-2.5 h-2.5 rounded-full shadow-sm", priorityColors[task.priority])} />
+                  {!task.done && (
+                    <button
+                      onClick={() => startFocus({ id: task.id, title: task.title })}
+                      title="Start focus session"
+                      className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all duration-200"
+                    >
+                      <Timer className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
               ))
             )}

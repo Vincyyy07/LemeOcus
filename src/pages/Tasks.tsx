@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, CheckCircle2, Circle, Trash2, Calendar, X, Loader2 } from "lucide-react";
+import { Plus, CheckCircle2, Circle, Trash2, X, Loader2, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/context/AuthContext";
 import { useTasks, logTaskCompletion } from "@/hooks/use-tasks";
+import { useFocus } from "@/context/FocusContext";
 import { toast } from "sonner";
 
 type Priority = "high" | "medium" | "low";
@@ -31,6 +32,7 @@ const fadeUp = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
 const Tasks = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const { startFocus } = useFocus();
   const [category, setCategory] = useState<Category>("all");
   const [filter, setFilter] = useState<Filter>("today");
   const [showModal, setShowModal] = useState(false);
@@ -167,6 +169,15 @@ const Tasks = () => {
               </div>
               <span className={cn("w-2 h-2 rounded-full shrink-0", priorityDot[task.priority as Priority])} />
               <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                {!task.done && (
+                  <button
+                    onClick={() => startFocus({ id: task.id, title: task.title })}
+                    title="Start focus session"
+                    className="p-1.5 rounded-lg hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Timer className="w-3.5 h-3.5" />
+                  </button>
+                )}
                 <button
                   onClick={() => deleteMutation.mutate(task.id)}
                   className="p-1.5 rounded-lg hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
