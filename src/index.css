@@ -459,3 +459,13 @@
     transform: translateY(15px) translateX(-20px);
   }
 }
+
+/* ─── Habit Heatmap (div cells) ─────────────────────────────── */
+.heatmap-empty { background-color: hsl(228 22% 10%); }
+.heatmap-1     { background-color: hsl(262 65% 28%); }
+.heatmap-2     { background-color: hsl(262 72% 42%); }
+.heatmap-3     { background-color: hsl(262 80% 56%); }
+.heatmap-4     {
+  background-color: hsl(262 85% 68%);
+  box-shadow: 0 0 5px hsl(262 85% 68% / 0.55);
+}

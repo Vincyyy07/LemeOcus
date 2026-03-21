@@ -5,6 +5,8 @@ import { useAuth } from "@/context/AuthContext";
 import { useMemo } from "react";
 import { TrendingUp, TrendingDown, Award, AlertCircle, Flame, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { subDays, format } from "date-fns";
+import { HabitHeatmap } from "@/components/habits/HabitHeatmap";
 
 const stagger = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.06 } } };
 const fadeUp = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
@@ -64,19 +66,33 @@ const Reports = () => {
     });
 
     const { data: habitLogs = [], isLoading: hll } = useQuery({
-        queryKey: ["habit_logs", currentYear, currentMonth],
+        queryKey: ["habit_logs_90d"],
         queryFn: async () => {
-            const startDate = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-01`;
+            // Fetch 90 days for heatmap; current month for the report stats
+            const since = format(subDays(new Date(), 90), "yyyy-MM-dd");
             const endDate = today.toISOString().split("T")[0];
             const { data, error } = await supabase
                 .from("habit_logs")
                 .select("*")
-                .gte("date", startDate)
+                .gte("date", since)
                 .lte("date", endDate);
             if (error) throw error;
             return data;
         },
     });
+
+    // Filter current-month logs for report stats
+    const currentMonthStart = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-01`;
+    const habitLogsThisMonth = habitLogs.filter((l) => l.date >= currentMonthStart);
+
+    // Aggregate 90-day logs for heatmap (count habits done per day)
+    const heatmapData = useMemo(() => {
+        const map = new Map<string, number>();
+        for (const log of habitLogs.filter(l => l.done)) {
+            map.set(log.date, (map.get(log.date) ?? 0) + 1);
+        }
+        return Array.from(map.entries()).map(([date, count]) => ({ date, count }));
+    }, [habitLogs]);
 
     if (tl || hl || tll || hll) {
         return (
@@ -98,9 +114,9 @@ const Reports = () => {
         return { ...task, doneCount, missedCount, rate, logs };
     });
 
-    // Per-habit stats
+    // Per-habit stats (current month)
     const habitStats = habits.map((habit) => {
-        const logs = habitLogs.filter((l) => l.habit_id === habit.id);
+        const logs = habitLogsThisMonth.filter((l) => l.habit_id === habit.id);
         const doneCount = logs.filter((l) => l.done).length;
         const missedCount = days.length - doneCount;
         const rate = days.length > 0 ? Math.round((doneCount / days.length) * 100) : 0;
@@ -190,11 +206,11 @@ const Reports = () => {
                 </motion.div>
             )}
 
-            {/* Habit calendar grid */}
-            {habitStats.length > 0 && (
+            {/* Habit heatmap */}
+            {habits.length > 0 && (
                 <motion.div variants={fadeUp} className="glass rounded-none p-6">
-                    <h2 className="font-display text-lg font-semibold mb-4">Habits — Daily Checklist</h2>
-                    <CalendarGrid items={habitStats} days={days} keyField="habit_id" />
+                    <h2 className="font-display text-lg font-semibold mb-4">Habits — Consistency Heatmap</h2>
+                    <HabitHeatmap data={heatmapData} totalHabits={habits.length} />
                 </motion.div>
             )}
 
