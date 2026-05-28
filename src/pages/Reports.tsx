@@ -140,7 +140,7 @@ const Reports = () => {
                     <h1 className="font-display text-3xl font-bold">Monthly Report</h1>
                     <p className="text-muted-foreground text-sm mt-1">{MONTH_LABEL} — {days.length} days tracked</p>
                 </div>
-                <div className="glass rounded-none px-6 py-3 text-center glow-purple">
+                <div className="glass-card rounded-2xl px-6 py-3 text-center glow-purple">
                     <p className="text-3xl font-bold font-display text-gradient-purple">{overallRate}%</p>
                     <p className="text-xs text-muted-foreground">Overall Score</p>
                 </div>
@@ -154,7 +154,7 @@ const Reports = () => {
                     { label: "Total Missed", value: totalSlots - totalDone, icon: XCircle, color: "text-destructive" },
                     { label: "Best Streak", value: `${bestStreak}d`, icon: Flame, color: "text-accent" },
                 ].map((s) => (
-                    <div key={s.label} className="glass rounded-none p-4">
+                    <div key={s.label} className="glass-card rounded-2xl p-4 hover-lift">
                         <s.icon className={`w-5 h-5 ${s.color} mb-2`} />
                         <p className="text-2xl font-bold font-display">{s.value}</p>
                         <p className="text-xs text-muted-foreground mt-0.5">{s.label}</p>
@@ -166,7 +166,7 @@ const Reports = () => {
             {(pros.length > 0 || cons.length > 0) && (
                 <motion.div variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {pros.length > 0 && (
-                        <div className="glass rounded-none p-5 border border-success/20">
+                        <div className="glass-card rounded-2xl p-5 border border-success/20 glow-green hover-lift">
                             <h2 className="font-display text-base font-semibold flex items-center gap-2 mb-3 text-success">
                                 <Award className="w-4 h-4" /> You're Crushing It 💪
                             </h2>
@@ -181,7 +181,7 @@ const Reports = () => {
                         </div>
                     )}
                     {cons.length > 0 && (
-                        <div className="glass rounded-none p-5 border border-destructive/20">
+                        <div className="glass-card rounded-2xl p-5 border border-destructive/20 hover-lift shadow-[0_0_12px_hsl(var(--destructive)/0.12)]">
                             <h2 className="font-display text-base font-semibold flex items-center gap-2 mb-3 text-destructive">
                                 <AlertCircle className="w-4 h-4" /> Needs Attention ⚠️
                             </h2>
@@ -200,7 +200,7 @@ const Reports = () => {
 
             {/* Task calendar grid */}
             {taskStats.length > 0 && (
-                <motion.div variants={fadeUp} className="glass rounded-none p-6">
+                <motion.div variants={fadeUp} className="glass-card rounded-2xl p-6 glow-purple">
                     <h2 className="font-display text-lg font-semibold mb-4">Tasks — Daily Checklist</h2>
                     <CalendarGrid items={taskStats} days={days} keyField="task_id" />
                 </motion.div>
@@ -208,14 +208,14 @@ const Reports = () => {
 
             {/* Habit heatmap */}
             {habits.length > 0 && (
-                <motion.div variants={fadeUp} className="glass rounded-none p-6">
+                <motion.div variants={fadeUp} className="glass-card rounded-2xl p-6 glow-blue">
                     <h2 className="font-display text-lg font-semibold mb-4">Habits — Consistency Heatmap</h2>
                     <HabitHeatmap data={heatmapData} totalHabits={habits.length} />
                 </motion.div>
             )}
 
             {tasks.length === 0 && habits.length === 0 && (
-                <motion.div variants={fadeUp} className="glass rounded-none p-12 text-center">
+                <motion.div variants={fadeUp} className="glass-card rounded-2xl p-12 text-center">
                     <p className="text-muted-foreground">No data yet — add tasks and habits to start tracking!</p>
                 </motion.div>
             )}

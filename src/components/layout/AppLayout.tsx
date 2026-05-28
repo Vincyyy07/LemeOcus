@@ -35,10 +35,21 @@ const AppLayout = () => {
 
       <AppSidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
 
-      <main className="flex-1 relative z-10 overflow-auto">
-        <div className="p-6 md:p-8 max-w-6xl mx-auto">
+      <main className="flex-1 relative z-10 overflow-auto flex flex-col justify-between min-h-[calc(100vh-4rem)] md:min-h-screen">
+        <div className="p-6 md:p-8 max-w-6xl mx-auto w-full flex-1">
           <Outlet />
         </div>
+        <footer className="py-6 text-center text-xs text-muted-foreground/35 hover:text-muted-foreground/60 transition-colors border-t border-border/10 w-full max-w-6xl mx-auto px-6 md:px-8">
+          Designed & built with ❤️ by{" "}
+          <a
+            href="https://github.com/Vincyyy07"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-primary hover:underline"
+          >
+            Vincyyy07
+          </a>
+        </footer>
       </main>
     </div>
   );
